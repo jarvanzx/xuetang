@@ -77,6 +77,11 @@ export function playAudio() {
   bgAudio.play()
 }
 
+export function stopAudio() {
+  bgAudio.stop()
+  store.commit('SET_PLAY_STATE', false)
+}
+
 function onAudioOnload() {
   const innerAudioContext = uni.getBackgroundAudioManager();
   innerAudioContext.onCanplay(() => {

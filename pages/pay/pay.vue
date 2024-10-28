@@ -200,8 +200,14 @@
             })
             clearInterval(this.timer)
             setTimeout(() => {
-              uni.redirectTo({
-                url: '/pages/order/order'
+              uni.navigateBack({
+                delta: 1,
+                fail() {
+                  uni.switchTab({
+                    url: '/pages/index/index',
+                  })
+                }
+
               })
             }, 1200)
           },

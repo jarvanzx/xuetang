@@ -1,6 +1,7 @@
 <script>
   import {
-    audioHandler
+    audioHandler,
+    stopAudio
   } from './utils/audio'
   export default {
     onLaunch: function() {
@@ -47,6 +48,7 @@
     },
     onHide: function() {
       console.log('App Hide')
+      stopAudio()
     }
   }
 </script>
