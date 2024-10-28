@@ -1,0 +1,403 @@
+{
+  "pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+    {
+      "path": "pages/index/index",
+      "style": {
+        "navigationStyle": "custom"
+      }
+    }, {
+      "path": "pages/my/my",
+      "style": {
+        "navigationStyle": "custom"
+      }
+    },
+
+    {
+      "path": "pages/login/login",
+      "style": {
+        "navigationStyle": "custom"
+      }
+    },
+    {
+      "path": "pages/setting/setting",
+      "style": {
+        "navigationBarTitleText": "设置"
+      }
+    },
+    {
+      "path": "pages/help/help",
+      "style": {
+        "navigationBarTitleText": "帮助中心"
+      }
+    },
+    {
+      "path": "pages/circle/circle",
+      "style": {
+        "navigationStyle": "custom",
+        "enablePullDownRefresh": true
+      }
+    },
+    {
+      "path": "pages/shop/shop",
+      "style": {
+        "navigationStyle": "custom"
+      }
+    },
+    {
+      "path": "pages/goodsDetail/goodsDetail",
+      "style": {
+        "navigationStyle": "custom"
+      }
+    },
+    {
+      "path": "pages/cart/cart",
+      "style": {
+        "navigationBarTitleText": "购物车"
+      }
+    },
+    {
+      "path": "pages/confirmOrder/confirmOrder",
+      "style": {
+        "navigationBarTitleText": "确认订单"
+      }
+    },
+    {
+      "path": "pages/addressList/addressList",
+      "style": {
+        "navigationBarTitleText": "我的收货地址"
+      }
+    },
+    {
+      "path": "pages/addressDetail/addressDetail",
+      "style": {
+        "navigationBarTitleText": "新增地址"
+      }
+    },
+    {
+      "path": "pages/pay/pay",
+      "style": {
+        "navigationBarTitleText": "支付"
+      }
+    },
+    {
+      "path": "pages/orderDetail/orderDetail",
+      "style": {
+        "navigationBarTitleText": "订单详情"
+      }
+    },
+    {
+      "path": "pages/audioDetail/audioDetail",
+      "style": {
+        "navigationStyle": "custom"
+      }
+    },
+    {
+      "path": "pages/courseDetail/courseDetail",
+      "style": {
+        "navigationStyle": "custom"
+      }
+    },
+    {
+      "path": "pages/classify/classify",
+      "style": {
+        "navigationStyle": "custom"
+      }
+    },
+    {
+      "path": "pages/web/web",
+      "style": {
+        "navigationBarTitleText": ""
+      }
+    }
+
+  ],
+  "subPackages": [{
+      "root": "pages/sub-nav",
+      "pages": [{
+          "path": "free",
+          "style": {
+            "navigationBarTitleText": "免费专区"
+          }
+        },
+        {
+          "path": "small",
+          "style": {
+            "navigationBarTitleText": "微课专区"
+          }
+        },
+        {
+          "path": "circleDetail",
+          "style": {
+            "navigationBarTitleText": "详情"
+          }
+        },
+        {
+          "path": "circleRelease",
+          "style": {
+            "navigationStyle": "custom"
+          }
+        },
+        {
+          "path": "circleCover",
+          "style": {
+            "navigationStyle": "custom"
+          }
+        },
+        {
+          "path": "circleList",
+          "style": {
+            "navigationStyle": "custom"
+          }
+        },
+        {
+          "path": "goodBook",
+          "style": {
+            "navigationBarTitleText": "解读好书"
+          }
+        },
+        {
+          "path": "search-result/search-result",
+          "style": {
+            "navigationBarTitleText": "搜索"
+          }
+        },
+        {
+          "path": "cover-edit",
+          "style": {
+            "navigationBarTitleText": "封面修改"
+          }
+        },
+        {
+          "path": "edit-sign",
+          "style": {
+            "navigationBarTitleText": "修改签名"
+          }
+        },
+        {
+          "path": "coverCrop",
+          "style": {
+            "navigationBarTitleText": ""
+          }
+        },
+        {
+          "path": "goodsResult",
+          "style": {
+            "navigationBarTitleText": "",
+            "navigationStyle": "custom"
+          }
+        },
+        {
+          "path": "notification",
+          "style": {
+            "navigationBarTitleText": "消息通知"
+          }
+        },
+        {
+          "path": "enroll",
+          "style": {
+            "navigationBarTitleText": "报名"
+          }
+        }
+      ]
+    },
+    {
+      "root": "pages/user",
+      "pages": [{
+          "path": "info",
+          "style": {
+            "navigationBarTitleText": "个人信息"
+          }
+        },
+        {
+          "path": "feedback",
+          "style": {
+            "navigationBarTitleText": "意见反馈"
+          }
+        },
+        {
+          "path": "offline-classes",
+          "style": {
+            "navigationBarTitleText": "线下课"
+          }
+        },
+        {
+          "path": "my-studies",
+          "style": {
+            "navigationBarTitleText": "我的学习"
+          }
+        },
+        {
+          "path": "my-notes",
+          "style": {
+            "navigationBarTitleText": "我的笔记"
+          }
+        },
+        {
+          "path": "coupon",
+          "style": {
+            "navigationBarTitleText": "优惠券"
+          }
+        },
+        {
+          "path": "cdk",
+          "style": {
+            "navigationBarTitleText": "激活码"
+          }
+        },
+        {
+          "path": "retail",
+          "style": {
+            "navigationStyle": "custom"
+          }
+        },
+        {
+          "path": "withdraw-list",
+          "style": {
+            "navigationBarTitleText": "提现记录"
+          }
+        },
+        {
+          "path": "income-list",
+          "style": {
+            "navigationBarTitleText": "收入明细"
+          }
+        },
+        {
+          "path": "withdraw",
+          "style": {
+            "navigationStyle": "custom"
+          }
+        },
+        {
+          "path": "order",
+          "style": {
+            "navigationBarTitleText": "订单列表"
+          }
+        },
+        {
+          "path": "evaluate",
+          "style": {
+            "navigationBarTitleText": "用户评价"
+          }
+        },
+        {
+          "path": "vip",
+          "style": {
+            "navigationStyle": "custom"
+          }
+        },
+        {
+          "path": "rank",
+          "style": {
+            "navigationStyle": "custom"
+          }
+        },
+        {
+          "path": "lottery",
+          "style": {
+            "navigationStyle": "custom"
+          }
+        },
+        {
+          "path": "famous-teacher",
+          "style": {
+            "navigationBarTitleText": "名师专区"
+          }
+        },
+        {
+          "path": "famous-teacher-detail",
+          "style": {
+            "navigationBarTitleText": "名师介绍"
+          }
+        },
+        {
+          "path": "notes-detail",
+          "style": {
+            "navigationBarTitleText": "我的笔记"
+          }
+        },
+        {
+          "path": "collect",
+          "style": {
+            "navigationBarTitleText": "我的收藏"
+          }
+        },
+        {
+          "path": "agreement",
+          "style": {
+            "navigationBarTitleText": ""
+          }
+        },
+        {
+          "path": "redeem-course",
+          "style": {
+            "navigationBarTitleText": "课程兑换"
+          }
+        },
+        {
+          "path": "orderComment",
+          "style": {
+            "navigationBarTitleText": "订单评价"
+          }
+        },
+        {
+          "path": "applyOrder",
+          "style": {
+            "navigationBarTitleText": "申请售后"
+          }
+        }
+      ]
+    }
+  ],
+  "requiredPrivateInfos": [
+    "chooseLocation"
+  ],
+  "requiredBackgroundModes": ["audio"],
+  "globalStyle": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "uni-app",
+    "navigationBarBackgroundColor": "#F8F8F8",
+    "backgroundColor": "#F8F8F8",
+    "app-plus": {
+      "bounce": "none"
+    }
+  },
+  /* 底部菜单 */
+  "tabBar": {
+    "color": "#999999", //菜单上的文字默认颜色
+    "selectedColor": "#7644FF", //菜单上的文字选中时的颜色
+    "borderStyle": "white", //菜单上边框的颜色，仅支持 black/white
+
+    // #ifdef MP
+    "backgroundColor": "#ffffff",
+    "custom": true,
+    // #endif
+    // #ifndef MP
+    "blurEffect": "extralight",
+    "fontSize": "11px",
+    // #endif
+
+    // #ifdef APP-PLUS
+    "spacing": "5px",
+    // #endif
+    "list": [{
+        "pagePath": "pages/index/index", //页面路径，必须在 pages 中先定义
+
+        "text": "首页" //菜单上按钮文字，在 5+APP 和 H5 平台为非必填。例如中间可放一个没有文字的+号图标
+      },
+      {
+        "pagePath": "pages/circle/circle", //页面路径，必须在 pages 中先定义
+        "text": "成长圈" //菜单上按钮文字，在 5+APP 和 H5 平台为非必填。例如中间可放一个没有文字的+号图标
+      },
+      {
+        "pagePath": "pages/shop/shop", //页面路径，必须在 pages 中先定义
+        "text": "商城" //菜单上按钮文字，在 5+APP 和 H5 平台为非必填。例如中间可放一个没有文字的+号图标
+      },
+      {
+        "pagePath": "pages/my/my",
+        "text": "我"
+      }
+    ]
+  },
+  "uniIdRouter": {}
+}
