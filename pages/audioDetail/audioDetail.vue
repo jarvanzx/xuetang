@@ -425,6 +425,10 @@
         this.courseId = options.course_id
         // await this.getCourse()
       }
+	  
+	  if(options.category_id && options.category_id==6){
+		await this.getCourse() 
+	  }
 
       if (options?.chapter_id) {
         this.chapterId = options.chapter_id
@@ -579,10 +583,9 @@
 
           // this.commentList = course_comment
           this.courseInfo = res.data
-          this.playIndex = 0
-          this.courseList = res.data.course_file
-
-          console.log("this.courseList", this.courseList)
+          // this.playIndex = 0
+          // this.courseList = res.data.course_file
+          // console.log("this.courseList", this.courseList)
           // if (course_file?.length > 0) {
 
           // } else {

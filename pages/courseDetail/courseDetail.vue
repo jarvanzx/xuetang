@@ -570,7 +570,7 @@
 				return IMG_BASE_URL + url
 			},
 			async getRecCourse(id) {
-				this.courseId = id
+				this.courseId = id;
 				this.getData();
 				this.getLike();
 			},
@@ -587,6 +587,7 @@
 				// this.$set(this.detailData, 'collection_status', res.data.collection_status)
 			},
 			async getData() {
+				this.chapters=[];
 				let res = await this.$Api.getCourceDetail({
 					// course_id: this.$route.query.course_id
 					course_id: this.courseId
@@ -596,6 +597,23 @@
 				// if(courses?.lenght > 0) {
 
 				// }
+				
+				console.log("this.chapters",this.chapters)
+				
+				if(res.data.course_file && res.data.course_file.length>0){
+					this.currCourseIndex=0;
+					this.chapters=res.data.course_file;
+				}
+				
+				
+				if( res.data.course_file.length==0 && res.data.file){
+					this.currCourseIndex=0;
+					
+					this.chapters=[{file:res.data.file}];
+				}
+				
+				console.log("this.chapters",this.chapters)
+				
 			},
 
 			async getComments() {
@@ -616,7 +634,7 @@
 			},
 			change2Audio() {
 				uni.navigateTo({
-					url: '/pages/audioDetail/audioDetail?course_id=' + this.courseId
+					url: '/pages/audioDetail/audioDetail?course_id=' + this.courseId+'&category_id='+this.detailData.category_id
 				})
 			},
 			handleZan(id) {
