@@ -68,7 +68,8 @@
           } = await this.$Api.getCourseList({
             teacher_id,
             page: this.page,
-            pagesize: this.pageSize
+            pagesize: this.pageSize,
+			category_id:3
           })
           this.courseList = this.courseList.concat(data?.data || [])
           this.pageMax = data?.data?.length < this.pageSize

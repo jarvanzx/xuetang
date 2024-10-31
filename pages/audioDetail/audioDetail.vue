@@ -32,7 +32,7 @@
             <view>讲师：{{courseInfo.teacher.name}}</view>
           </view>
           <view class="audio-text-content">
-            {{this.courseList[this.playIndex].text_show}}
+            {{this.courseList[0].name}}
           </view>
         </view>
       </template>
@@ -419,6 +419,7 @@
       DrapProgress
     },
     async onLoad(options) {
+		console.log("options",options)
       this.barHeight = uni.getStorageSync('barHeight')
       if (options.course_id) {
         this.courseId = options.course_id
@@ -433,6 +434,7 @@
         this.courseList = [course]
         this.courseInfo = course
         this.courseName = course.name
+		
         store.dispatch('setCourseList', this.courseList)
         this.setAudioStore(0)
       }
@@ -574,6 +576,10 @@
 
           // this.commentList = course_comment
           this.courseInfo = res.data
+		  this.playIndex=0
+		  this.courseList=res.data.course_file
+		  
+		  console.log("this.courseList",this.courseList)
           // if (course_file?.length > 0) {
 
           // } else {
@@ -765,6 +771,7 @@
       },
       playAudio(item, index) {
         this.$store.dispatch('setPlayIndex', index)
+		console.log("item",item);
         this.audioInstance.src = item.file
         this.audioInstance.title = item.name
         this.audioInstance.coverImgUrl = item.poster_image
@@ -1370,7 +1377,7 @@
       border-radius: 1998rpx 1998rpx 1998rpx 1998rpx;
       margin: 8rpx auto 0;
       display: flex;
-      justify-content: space-between;
+      // justify-content: space-between;
       align-items: center;
       font-family: PingFang SC, PingFang SC;
       font-weight: 400;

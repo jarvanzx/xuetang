@@ -78,7 +78,7 @@
             <view class="flex align-center" v-if="isBook && type == 'hao'">
               <image src="https://jzxt.qifudaren.net/static/index/icon-watch.png" class="study-icon" mode="aspectFill">
               </image>
-              <view class="study-des">{{ item.view_num }}人学过</view>
+              <view class="study-des">{{ item.view_num?item.view_num:item.play_count }}人学过</view>
             </view>
             <view class="flex align-center" v-else>
               <image src="https://jzxt.qifudaren.net/static/index/icon-watch.png" class="study-icon" mode="aspectFill">

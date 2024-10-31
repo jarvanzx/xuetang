@@ -77,13 +77,15 @@
         } = await this.$Api.getCourseByCode({
           course_code: this.code
         })
+		
+		console.log("data",data);
         if (data.length > 0) {
           this.courseList = data
           return
         }
-        uni.showToast({
-          title: '该兑换码无效',
-        })
+        // uni.showToast({
+        //   title: '该兑换码无效',
+        // })
       },
       redeemCourse(course) {
         uni.showModal({
