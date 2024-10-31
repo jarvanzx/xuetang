@@ -421,9 +421,11 @@
     async onLoad(options) {
       console.log("options", options)
       this.barHeight = uni.getStorageSync('barHeight')
+
       if (options.course_id) {
         this.courseId = options.course_id
-        // await this.getCourse()
+        await this.getClassZj();
+        await this.getCourse()
       }
 
       if (options?.chapter_id) {
@@ -573,16 +575,22 @@
           const res = await this.$Api.getCourceDetail({
             course_id: this.courseId
           })
+          if (this.courseList.length == 0) {
+            this.courseList = [res.data]
+            store.dispatch('setCourseList', this.courseList)
+            this.setAudioStore(0)
+          }
+
           // const {
           //   course_file,
           // } = res.data
 
           // this.commentList = course_comment
-          this.courseInfo = res.data
-          this.playIndex = 0
-          this.courseList = res.data.course_file
+          // this.courseInfo = res.data
+          // this.playIndex = 0
+          // this.courseList = res.data.course_file
 
-          console.log("this.courseList", this.courseList)
+          // console.log("this.courseList", this.courseList)
           // if (course_file?.length > 0) {
 
           // } else {
@@ -604,17 +612,19 @@
           course_id: this.courseId,
           q: this.courseName
         }).then(res => {
-          this.courseList = res.data.data
-          store.dispatch('setCourseList', res.data.data)
-          if (this.currentCourseId != this.courseId && this.courseList.length > 0) {
-            let idx = 0
-            if (this.chapterId) {
-              idx = this.courseList.findIndex(item => item.id == this.chapterId)
-              if (idx == -1) {
-                idx = 0
+          if (res.data.data?.length > 0) {
+            this.courseList = res.data.data
+            store.dispatch('setCourseList', res.data.data)
+            if (this.currentCourseId != this.courseId) {
+              let idx = 0
+              if (this.chapterId) {
+                idx = this.courseList.findIndex(item => item.id == this.chapterId)
+                if (idx == -1) {
+                  idx = 0
+                }
               }
+              this.setAudioStore(idx)
             }
-            this.setAudioStore(idx)
           }
         })
 
@@ -663,7 +673,7 @@
           return
         }
         await this.$Api.postStudyTime({
-          course_id: course.course_id,
+          course_id: this.courseId,
           course_file_id: course.id,
           type: 1,
           view_time: this.study_time / 1000
@@ -677,7 +687,7 @@
           course_id: this.courseId,
           content: this.commentText
         }).then(res => {
-          this.getCourse()
+          this.getComments()
           this.commentText = ''
           uni.showToast({
             title: '评论成功',
