@@ -32,7 +32,7 @@
             <view>讲师：{{courseInfo.teacher.name}}</view>
           </view>
           <view class="audio-text-content">
-            {{this.courseList[0].name}}
+            {{courseInfo.text_show}}
           </view>
         </view>
       </template>
@@ -400,11 +400,11 @@
         barHeight: 44,
         courseName: "",
         courseId: '',
-        courseInfo: {
-          teacher: {
-            name: ''
-          }
-        },
+        // courseInfo: {
+        //   teacher: {
+        //     name: ''
+        //   }
+        // },
         courseList: [],
         commentList: [],
         cmt_page: 1,
@@ -419,11 +419,11 @@
       DrapProgress
     },
     async onLoad(options) {
-		console.log("options",options)
+      console.log("options", options)
       this.barHeight = uni.getStorageSync('barHeight')
       if (options.course_id) {
         this.courseId = options.course_id
-        await this.getCourse()
+        // await this.getCourse()
       }
 
       if (options?.chapter_id) {
@@ -434,7 +434,7 @@
         this.courseList = [course]
         this.courseInfo = course
         this.courseName = course.name
-		
+
         store.dispatch('setCourseList', this.courseList)
         this.setAudioStore(0)
       }
@@ -498,7 +498,7 @@
       },
       audioTitle() {
         return this.courseList[this.playIndex]?.name ||
-          this.courseInfo.name ||
+          this.courseInfo?.name ||
           ''
       },
       formatRemainTime() {
@@ -512,6 +512,9 @@
       },
       chapterCollected() {
         return this.courseList[this.playIndex]?.collection_status == 0 ? false : true
+      },
+      courseInfo() {
+        return this.courseList[this.playIndex]
       }
     },
     methods: {
@@ -576,10 +579,10 @@
 
           // this.commentList = course_comment
           this.courseInfo = res.data
-		  this.playIndex=0
-		  this.courseList=res.data.course_file
-		  
-		  console.log("this.courseList",this.courseList)
+          this.playIndex = 0
+          this.courseList = res.data.course_file
+
+          console.log("this.courseList", this.courseList)
           // if (course_file?.length > 0) {
 
           // } else {
@@ -771,7 +774,7 @@
       },
       playAudio(item, index) {
         this.$store.dispatch('setPlayIndex', index)
-		console.log("item",item);
+        console.log("item", item);
         this.audioInstance.src = item.file
         this.audioInstance.title = item.name
         this.audioInstance.coverImgUrl = item.poster_image
