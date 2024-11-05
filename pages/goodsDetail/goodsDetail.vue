@@ -219,7 +219,7 @@
         const res = await this.$Api.getShopGoodDetail({
           id: this.goodsId
         })
-        res.data.content = res.data.content.replaceAll('<image ', '<image style="width:100%;object-fit:cover;"')
+        res.data.content =(res.data.content.indexOf('<image')!=-1)?res.data.content.replaceAll('<image ', '<image style="width:100%;object-fit:cover;"'):res.data.content
         this.detailData = res.data
         if (this.detailData.is_sku) {
           this.activeSkuIds = this.detailData.sku_prices[0].goods_sku_ids?.split(',') ?? []

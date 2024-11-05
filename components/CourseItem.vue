@@ -128,8 +128,18 @@
       toDetail() {
         const {
           type,
-          id
+          id,
+		  course_file
         } = this.item
+		
+		if (course_file.length == 0) {
+			uni.showToast({
+				icon: 'none',
+				title: '暂无章节！'
+			})
+			return false;
+		}
+		
         if (type === 1) {
           uni.navigateTo({
             url: `/pages/courseDetail/courseDetail?course_id=${id}`

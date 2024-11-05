@@ -71,7 +71,7 @@
 				this.bannerList = res.data
 			},
 			async getList(){
-				let res = await this.$Api.getCourseList({category_id:2,page:this.page,pagesize:this.pagesize})
+				let res = await this.$Api.getCourseList({category_id:2,type:1,page:this.page,pagesize:this.pagesize})
 				console.log('getFreeCourse', res)
 				this.courselist=this.courselist.concat(res.data.data)
 				this.total=res.data.total

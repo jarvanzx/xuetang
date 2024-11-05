@@ -73,9 +73,11 @@
 
 						<view class="grid col-5 text-gray">
 							<view class="flex align-center justify-center info-tab-item" @click="handleCollect">
-								<image
-									:src="chapterCollected ? '/static/common/like-fill.png' : 'https://jzxt.qifudaren.net/static/course/icon-shoucang.png'"
-									class="icon-48" mode=""></image>
+								<image v-if="iscollect" src="/static/common/like-fill.png" class="icon-48"
+									mode="aspectFill">
+								</image>
+								<image v-else src="/static/common/aixin.png" class="icon-48" mode="aspectFill">
+								</image>
 								<view>收藏</view>
 							</view>
 							<view class="flex align-center justify-center info-tab-item" @click="handleCmt">
@@ -131,7 +133,9 @@
 								:class="{'course-detail-card-nav-item-active': cardNav === 2}"
 								@click="changeCardNav(2)">课程目录</view>
 						</view>
-						<view class="course-detail-card-content" v-if="cardNav === 1">{{detailData.introduce}}</view>
+						<view class="course-detail-card-content" v-if="cardNav === 1">
+							<rich-text :nodes="formatRichText(detailData.introduce)"></rich-text>
+						</view>
 						<view class="course-detail-card-content course-catalogue-wrap" v-if="cardNav === 2">
 							<view class="course-catalogue-title">共<span>{{chapters.length}}</span>节</view>
 							<view class="course-catalogue-list">
@@ -169,8 +173,8 @@
 										<view class="course-eve-username">{{item.user.nickname}}</view>
 										<view class="flex align-center">
 											<image src="https://jzxt.qifudaren.net/static/course/icon-pinglun-2.png"
-												class="icon-36 margin-right" mode="aspectFill"
-												@click="replyCmt(item.id)"></image>
+												class="icon-36" mode="aspectFill" @click="replyCmt(item.id)"></image>
+											<text class="margin-right">{{item.reply.length}}</text>
 											<view class="flex align-center">
 												<image @click="handleCommentZan(item.id)"
 													:src="item.is_like == 1 ? '/static/common/like-fill.png' : 'https://jzxt.qifudaren.net/static/course/icon-shoucang.png'"
@@ -310,6 +314,9 @@
 <script>
 	import store from '@/store';
 	import {
+		mapState
+	} from 'vuex'
+	import {
 		IMG_BASE_URL
 	} from '../../config/env';
 	import {
@@ -379,10 +386,12 @@
 				showCmtIpt: false,
 				replyCmtText: '',
 				finished: true,
-				chapters: []
+				chapters: [],
+				iscollect: false
 			};
 		},
 		computed: {
+			...mapState(['currCourseIndex']),
 			showBuyBtn() {
 				if (this.detailData.is_buy === 1) {
 					return false
@@ -412,6 +421,7 @@
 
 			},
 			chapterCollected() {
+				console.log("11234");
 				return this.chapters[this.currCourseIndex]?.collection_status == 0 ? false : true
 			}
 		},
@@ -480,7 +490,13 @@
 					if (idx > -1) {
 						this.currCourseIndex = idx
 					}
+
+					console.log("currCourseIndex", this.chapters[this.currCourseIndex])
+
+					this.iscollect = this.chapters[this.currCourseIndex].collection_status == 1 ? true : false;
 				}
+
+
 			},
 			async replyComment() {
 				if (this.replyCmtText == '') return
@@ -550,13 +566,17 @@
 				this.postStudy(this.currCourseIndex).then(() => {
 					this.study_time = 0
 				})
+				this.detailData.name = this.chapters[index].name
+				this.iscollect = this.chapters[index].collection_status == 1 ? true : false;
 			},
 			async postStudy(idx) {
 				if (this.study_time == 0) return
-				const course = this.detailData.course_file[idx]
+				//this.detailData.course_file[idx]
+				const course_id = this.detailData.id;
 				await this.$Api.postStudyTime({
-					course_id: course.course_id,
-					course_file_id: course.id,
+					course_id: course_id, //course.course_id
+					course_file_id: this.detailData.course_file.length > 0 ? this.detailData.course_file[idx]
+						.id : '',
 					type: 1,
 					view_time: this.study_time / 1000
 				}).catch(err => {
@@ -574,46 +594,90 @@
 				this.getData();
 				this.getLike();
 			},
-			async handleCollect() {
+			async handleCollect_old() {
 				let res = await this.$Api.postChapterCollect({
 					// course_id: this.$route.query.course_id
 					course_id: this.courseId,
 					course_file_id: this.chapters.length > 0 ? this.chapters[this.currCourseIndex].id : ''
 				})
-				if(this.chapters.length>0){
-				  this.chapters[this.currCourseIndex].collection_status = res.data.collection_status	
+				if (this.chapters.length > 0) {
+					this.chapters[this.currCourseIndex].collection_status = res.data.collection_status
 				}
-				
+
 				// this.$set(this.detailData, 'collection_status', res.data.collection_status)
 			},
+
+
+			handleCollect() {
+				this.$Api.postChapterCollect({
+					course_id: this.courseId,
+					course_file_id: this.chapters.length > 0 ? this.chapters[this.currCourseIndex].id : ''
+				}).then(res => {
+					const msg = res.data.collection_status ? '收藏成功' : '取消收藏'
+					uni.showToast({
+						icon: 'none',
+						title: msg
+					})
+					this.iscollect = res.data.collection_status ? true : false
+					this.chapters[this.currCourseIndex].collection_status = res.data.collection_status
+				})
+			},
+
+
+			formatRichText(html) {
+				// 去掉img标签里的style、width、height属性
+				if (html) {
+					let newContent = html.replace(/<img[^>]*>/gi, function(match, capture) {
+						match = match.replace(/style="[^"]+"/gi, '').replace(/style='[^']+'/gi, '');
+						match = match.replace(/width="[^"]+"/gi, '').replace(/width='[^']+'/gi, '');
+						match = match.replace(/height="[^"]+"/gi, '').replace(/height='[^']+'/gi, '');
+						return match;
+					});
+					// 修改所有style里的width属性为max-width:100%
+					newContent = newContent.replace(/style="[^"]+"/gi, function(match, capture) {
+						match = match.replace(/width:[^;]+;/gi, 'max-width:100%;').replace(/width:[^;]+;/gi,
+							'max-width:100%;');
+						return match;
+					});
+					// 去掉<br/>标签
+					newContent = newContent.replace(/<br[^>]*\/>/gi, '');
+					// img标签添加style属性：max-width:100%;height:auto
+					newContent = newContent.replace(/\<img/gi,
+						'<img style="max-width:100%;height:auto;display:block;margin:0px auto;"');
+					return newContent;
+				}
+
+			},
+
 			async getData() {
-				this.chapters=[];
+				// this.chapters = [];
 				let res = await this.$Api.getCourceDetail({
 					// course_id: this.$route.query.course_id
 					course_id: this.courseId
 				})
+
+
+
 				this.detailData = res.data
 				// const courses = res.data.course_file
 				// if(courses?.lenght > 0) {
 
 				// }
-				
-				console.log("this.chapters",this.chapters)
-				
-				if(res.data.course_file && res.data.course_file.length>0){
-					this.currCourseIndex=0;
-					this.chapters=res.data.course_file;
-				}
-				
-				
-				if( res.data.course_file.length==0 && res.data.file){
-					this.currCourseIndex=0;
-					
-					this.chapters=[{file:res.data.file}];
-				}
-				
-				console.log("this.chapters",this.chapters)
-				
+
+				// if (res.data.course_file && res.data.course_file.length > 0) {
+				// 	this.currCourseIndex = 0;
+				// 	this.chapters = res.data.course_file;
+				// }
+
+
+				// if (res.data.course_file.length == 0 && res.data.file) {
+				// 	this.currCourseIndex = 0;
+
+				// 	this.chapters = [{
+				// 		file: res.data.file
+				// 	}];
+				// }
+
 			},
 
 			async getComments() {
@@ -634,7 +698,9 @@
 			},
 			change2Audio() {
 				uni.navigateTo({
-					url: '/pages/audioDetail/audioDetail?course_id=' + this.courseId+'&category_id='+this.detailData.category_id
+					url: '/pages/audioDetail/audioDetail?course_id=' + this.courseId + '&category_id=' + this
+						.detailData.category_id + '&chapter_id=' + (this.chapters.length > 0 ? this.chapters[this
+							.currCourseIndex].id : '')
 				})
 			},
 			handleZan(id) {
@@ -669,11 +735,16 @@
 				this.finalAmount = price
 			},
 			async getLike() {
-				let res = await this.$Api.getCourceGuessLike({
-					// course_id: this.$route.query.course_id
-					course_id: this.courseId
+				// let res = await this.$Api.getCourceGuessLike({
+				// 	course_id: this.courseId
+				// })
+
+				let res = await this.$Api.getCourseList({
+					// course_id: this.courseId,
+					category_id: 7
 				})
-				this.recommedata = res.data.data
+				this.recommedata = res.data.data;
+
 			},
 			handleCommentZan(id) {
 				const idx = this.commentList.findIndex(item => item.id === id)
@@ -711,8 +782,9 @@
 				this.showQrcode = true
 			},
 			toGoods() {
+				console.log("this.chapters[this.currCourseIndex]",this.chapters[this.currCourseIndex])
 				uni.navigateTo({
-					url: '/pages/goodsDetail/goodsDetail?goodsId=' + this.detailData.goods_id
+					url: '/pages/goodsDetail/goodsDetail?goodsId=' + (this.chapters.length > 0 ? this.chapters[this.currCourseIndex].goods_id : '')
 				})
 			},
 			back() {

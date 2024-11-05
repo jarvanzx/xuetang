@@ -66,11 +66,21 @@
 			onDetail(course) {
 				const {
 					type,
-					id
+					id,
+					course_file
 				} = course
 				const str = encodeURIComponent(JSON.stringify(course))
 
 				console.log(type + '-------' + id)
+
+
+				if (course_file.length == 0) {
+					uni.showToast({
+						icon: 'none',
+						title: '暂无章节！'
+					})
+					return false;
+				}
 
 				if (type === 1) {
 					uni.navigateTo({

@@ -361,7 +361,8 @@
 				const {
 					data
 				} = await this.$Api.getCourseList({
-					category_id: 5
+					category_id: 5,
+					type:1
 				})
 				console.log(data.data);
 				this.courseList = data.data
@@ -389,7 +390,7 @@
 				this.teacher = res2.data.home_teacher
 				// this.teacherAudio = res2.data.home_audio
 				// // store.commit('SET_RECOMMENT_LIST', res2.data.home_audio)
-				// uni.setStorageSync('qrcode', res2.data.assistant_qrcode)
+				uni.setStorageSync('qrcode', res2.data.assistant_qrcode)
 				// let res3 = await this.$Api.getHomeRecommendCourse({
 				//   home_teacher_id: this.teacher.id
 				// })

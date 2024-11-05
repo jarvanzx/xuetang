@@ -48,7 +48,7 @@
     },
     onHide: function() {
       console.log('App Hide')
-      stopAudio()
+      // stopAudio()
     }
   }
 </script>

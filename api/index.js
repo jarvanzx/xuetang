@@ -51,7 +51,7 @@ const Api = {
     data), //topic_id: 0 成长圈为0, 发布到笔记为1  content:'',images: ''
   getTeacherDetail: data => request("/api/xiluedu/teacher/detail", "get", data), //教师详情
   getCourseList: data => request("/api/xiluedu/course/lists", "get", data), //课程分类 0-所有 1-免费专区 2-微课专区
-  getBookCount: data => request("/api/xiluedu.article/board", "get", data), //书籍数量
+  getBookCount: data => request("/api/xiluedu.course/book_board", "get", data), //书籍数量api/xiluedu.article/board 
   getTeacherList: data => request("/api/xiluedu/teacher/lists", "get", data), //教师列表
   courseCommentFav: data => request("/api/xiluedu.course_comment/comment_like", "post", data),
   getShopCategory: data => request("/addons/shopro/category", "get", data),
